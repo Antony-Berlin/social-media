@@ -1,3 +1,18 @@
+
+server:
+  port: 8083
+
 spring:
+  datasource:
+    url: jdbc:postgresql://postgres-follow:5432/follow_db
+    username: follow_user
+    password: follow_pass
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
   application:
     name: follow-service
+
+jwt:
+  secret: "MzJieXRlc2xvbmdzZWNyZXRrZXlmb3JKV1QhISEhISEhISEh"

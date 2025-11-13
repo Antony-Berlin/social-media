@@ -17,6 +17,5 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-auth:
-  service:
-    url: http://auth-service:8081/auth/validate?token=
+jwt:
+  secret: "MzJieXRlc2xvbmdzZWNyZXRrZXlmb3JKV1QhISEhISEhISEh"

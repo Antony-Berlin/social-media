@@ -53,9 +53,36 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-user:5432/users_db
       SPRING_DATASOURCE_USERNAME: user_user
       SPRING_DATASOURCE_PASSWORD: user_pass
+  
+  postgres-follow:
+    image: postgres:15
+    container_name: postgres-follow
+    environment:
+      POSTGRES_USER: follow_user
+      POSTGRES_PASSWORD: follow_pass
+      POSTGRES_DB: follow_db
+    ports:
+      - "5435:5432"
+    volumes:
+      - pgdata_follow:/var/lib/postgresql/data
+
+  follow-service:
+    build: ./followservice
+    container_name: follow-service
+    depends_on:
+      - postgres-follow
+      - auth-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-follow:5432/follow_db
+      SPRING_DATASOURCE_USERNAME: follow_user
+      SPRING_DATASOURCE_PASSWORD: follow_pass
+
 
 volumes:
   pgdata_auth:
   pgdata_user:
+  pgdata_follow:
 
 
