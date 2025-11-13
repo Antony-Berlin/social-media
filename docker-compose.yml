@@ -28,5 +28,34 @@ services:
       SPRING_DATASOURCE_USERNAME: auth_user
       SPRING_DATASOURCE_PASSWORD: auth_pass
 
+  postgres-user:
+    image: postgres:15
+    container_name: postgres-user
+    restart: always
+    environment:
+      POSTGRES_USER: user_user
+      POSTGRES_PASSWORD: user_pass
+      POSTGRES_DB: users_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata_user:/var/lib/postgresql/data
+
+  user-service:
+    build: ./userservice
+    container_name: user-service
+    depends_on:
+      - postgres-user
+      - auth-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-user:5432/users_db
+      SPRING_DATASOURCE_USERNAME: user_user
+      SPRING_DATASOURCE_PASSWORD: user_pass
+
 volumes:
   pgdata_auth:
+  pgdata_user:
+
+
