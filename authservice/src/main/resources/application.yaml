@@ -17,5 +17,5 @@ spring:
     name: auth-service
 
 jwt:
-  secret: "supersecretkeyforjwtgeneration"
+  secret: "MzJieXRlc2xvbmdzZWNyZXRrZXlmb3JKV1QhISEhISEhISEh"
   expiration: 3600000 # 1 hour

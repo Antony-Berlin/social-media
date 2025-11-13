@@ -15,7 +15,9 @@ services:
       - pgdata_auth:/var/lib/postgresql/data
 
   auth-service:
-    build: .
+    build:
+      context: ./authservice       # <-- folder containing Dockerfile
+      dockerfile: Dockerfile        
     container_name: auth-service
     depends_on:
       - postgres-auth
