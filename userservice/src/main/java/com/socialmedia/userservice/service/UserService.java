@@ -6,11 +6,7 @@ import com.socialmedia.userservice.repository.UserProfileRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import com.fasterxml.jackson.databind.*;
 import com.socialmedia.userservice.utils.JwtValidator;
 
 import java.util.List;
