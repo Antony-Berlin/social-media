@@ -60,6 +60,24 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostsByUser(userId));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> getPostById(@PathVariable Long id,
+            @RequestHeader(value = "Authorization", required = false) String authHeader,
+            @RequestParam(value = "token", required = false) String tokenParam) {
+        String token = extractToken(authHeader, tokenParam);
+        String userId = extractUserId(token);
+        return ResponseEntity.ok(postService.getPostById(id));
+    }   
+
+    @GetMapping("user/{id}")
+    public ResponseEntity<List<Post>> getPostById(@PathVariable String id,
+            @RequestHeader(value = "Authorization", required = false) String authHeader,
+            @RequestParam(value = "token", required = false) String tokenParam) {
+        String token = extractToken(authHeader, tokenParam);
+        String userId = extractUserId(token);
+        return ResponseEntity.ok(postService.getPostsByUser(id));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Post> updatePost(@PathVariable Long id,
             @RequestHeader(value = "Authorization", required = false) String authHeader,
