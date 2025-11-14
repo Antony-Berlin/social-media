@@ -103,6 +103,13 @@ services:
     depends_on:
       - postgres-post
 
+  feed-service:
+    build: ./feedservice
+    container_name: feed-service
+    ports:
+      - "8085:8085"
+  
+
 
 volumes:
   pgdata_auth:

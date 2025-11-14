@@ -1,3 +1,16 @@
+
+server:
+  port: 8085
+
 spring:
+
   application:
     name: feed-service
+
+jwt:
+  secret: "MzJieXRlc2xvbmdzZWNyZXRrZXlmb3JKV1QhISEhISEhISEh"
+
+
+services:
+    post: http://post-service:8084
+    follow: http://follow-service:8083
