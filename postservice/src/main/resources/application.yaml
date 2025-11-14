@@ -1,3 +1,17 @@
+server:
+  port: 8084
+
 spring:
+  datasource:
+    url: jdbc:postgresql://postgres-post:5432/post_db
+    username: post_user
+    password: post_pass
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
   application:
     name: post-service
+
+jwt:
+  secret: "MzJieXRlc2xvbmdzZWNyZXRrZXlmb3JKV1QhISEhISEhISEh"
