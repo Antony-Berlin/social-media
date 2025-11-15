@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: follow-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: follow-service
+  template:
+    metadata:
+      labels:
+        app: follow-service
+    spec:
+      containers:
+      - name: follow-service
+        image: follow-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8083
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:postgresql://postgres-follow:5432/follow_db
+        - name: SPRING_DATASOURCE_USERNAME
+          value: follow_user
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: follow_pass
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: follow-service
+spec:
+  type: ClusterIP
+  selector:
+    app: follow-service
+  ports:
+  - port: 8083
+    targetPort: 8083

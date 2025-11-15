@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-follow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-follow
+  template:
+    metadata:
+      labels:
+        app: postgres-follow
+    spec:
+      containers:
+      - name: postgres-follow
+        image: postgres:15
+        env:
+        - name: POSTGRES_USER
+          value: "follow_user"
+        - name: POSTGRES_PASSWORD
+          value: "follow_pass"
+        - name: POSTGRES_DB
+          value: "follow_db"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: pgdata-follow
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: pgdata-follow
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-follow
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres-follow
+  ports:
+  - port: 5432
+    targetPort: 5432

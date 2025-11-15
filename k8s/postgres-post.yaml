@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-post
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-post
+  template:
+    metadata:
+      labels:
+        app: postgres-post
+    spec:
+      containers:
+      - name: postgres-post
+        image: postgres:15
+        env:
+        - name: POSTGRES_USER
+          value: "post_user"
+        - name: POSTGRES_PASSWORD
+          value: "post_pass"
+        - name: POSTGRES_DB
+          value: "post_db"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: pgdata-post
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: pgdata-post
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-post
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres-post
+  ports:
+  - port: 5432
+    targetPort: 5432

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-auth
+  template:
+    metadata:
+      labels:
+        app: postgres-auth
+    spec:
+      containers:
+      - name: postgres-auth
+        image: postgres:15
+        env:
+        - name: POSTGRES_USER
+          value: "auth_user"
+        - name: POSTGRES_PASSWORD
+          value: "auth_pass"
+        - name: POSTGRES_DB
+          value: "auth_db"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: pgdata-auth
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: pgdata-auth
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-auth
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres-auth
+  ports:
+  - port: 5432
+    targetPort: 5432

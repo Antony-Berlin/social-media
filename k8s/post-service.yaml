@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: post-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: post-service
+  template:
+    metadata:
+      labels:
+        app: post-service
+    spec:
+      containers:
+      - name: post-service
+        image: post-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8084
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:postgresql://postgres-post:5432/post_db
+        - name: SPRING_DATASOURCE_USERNAME
+          value: post_user
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: post_pass
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: post-service
+spec:
+  type: ClusterIP
+  selector:
+    app: post-service
+  ports:
+  - port: 8084
+    targetPort: 8084
